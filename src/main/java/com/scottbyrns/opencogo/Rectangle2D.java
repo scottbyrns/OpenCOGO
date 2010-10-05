@@ -17,11 +17,11 @@ public class Rectangle2D {
 
 
     public Rectangle2D () {
-        origin = new Point(0, 0);
+        this.origin = new Point(0, 0);
     }
 
     public Rectangle2D (float height, float width, float x, float y) {
-        origin = new Point(x, y);
+        this.origin = new Point(x, y);
         this.height = height;
         this.width = width;
     }
@@ -53,6 +53,27 @@ public class Rectangle2D {
     public Point getOrigin () {
         return this.origin;
     }
-    
+
+
+    public void setHeight (float height) {
+        this.height = height;
+    }
+
+    public void setWidth (float width) {
+        this.width = width;
+    }
+
+    public void setX (float x) {
+        this.origin.setX(x);
+    }
+
+    public void setY (float y) {
+        this.origin.setY(y);
+    }
+
+    public void setOrigin (Point origin) {
+        this.origin.setX(origin.getX());
+        this.origin.setY(origin.getY());
+    }
 
 }
