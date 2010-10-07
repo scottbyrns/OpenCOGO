@@ -25,7 +25,7 @@ public class PointList {
 	 */
 	public void addPoint (Point point) {
 		this.points.addElement(point);
-	}
+    }
 	/**
 	 * Returns the number of points in the PointList
 	 */
@@ -38,14 +38,17 @@ public class PointList {
 	public Point getPoint(int index) {
 		return this.points.elementAt(index);
 	}
-	
+
+    /**
+     * Get a primitive array of Point.
+     * @return
+     */
 	public Point[] toArray () {
         Point[] outputPoints = new Point[size()];
         for (int i = 0; i < size(); i += 1) {
             outputPoints[i] = getPoint(i);
         }
         return outputPoints;
-//		return (Point[])points.toArray();
 	}
 	/**
 	 * Create an instance of Vector<Point> and assign

@@ -4,32 +4,39 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.util.Date;
 
 /**
- * Created by IntelliJ IDEA.
+ * Class to hold and manage a point file in JSON form.
  * User: scott
  * Date: Oct 6, 2010
- * Time: 3:47:01 PM
- * To change this template use File | Settings | File Templates.
+ * Time: 8:47:01 PM
  */
 public class PointFile {
 
-    String file = null;
+    File file = null;
     PointMap pointMap = null;
 
     JSONObject pointFileJSON = null;
 
-    public PointFile (String file) {
+    /**
+     * Create a new point file object from the file.
+     * @param file
+     */
+    public PointFile (File file) {
         this.file = file;
         openPointFile(this.file);
     }
-
-    public void openPointFile (String file) {
+    /**
+     * Open the point file as JSON from the specified file path.
+     * @param file Path to the file to be opened.
+     */
+    public void openPointFile (File file) {
 
         String json_point_file = null;
 
         try {
-            json_point_file = readFileAsString(file);
+            json_point_file = readFileAsString(file.getAbsolutePath());
         }
         catch (java.io.IOException e) {
             System.out.println("FILE READ ERROR");
@@ -47,17 +54,33 @@ public class PointFile {
     }
 
 
-
+    /**
+     * Save the JSON point file to the location it was opened from.
+     */
     public void savePointFile () {
-        writeStringToPath(this.pointFileJSON.toString(), this.file);
+        savePointFile(this.file.getAbsolutePath());
     }
 
+    /**
+     * Save the JSON point file to the specified locaiton.
+     * @param file Location to save the JSON point file to.
+     */
     public void savePointFile (String file) {
+        setModifyDate();
         writeStringToPath(this.pointFileJSON.toString(), file);
     }
 
-
-
+    /**
+     * Set the "modified" attribute in the JSON to the current date.
+     */
+    public void setModifyDate () {
+        try {
+            this.pointFileJSON.put("modified", new Date().getTime());
+        }
+        catch (JSONException e) {
+            System.out.println("Trouble updating the modified date before a save.");
+        }
+    }
 
     /**
 	 * Open a file path and return the contents as a string.
