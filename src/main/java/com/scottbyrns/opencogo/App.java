@@ -2,7 +2,9 @@ package com.scottbyrns.opencogo;
 
 import com.scottbyrns.opencogo.point.Point;
 import com.scottbyrns.opencogo.point.PointFile;
-import com.scottbyrns.opencogo.point.PointMap;
+import com.scottbyrns.opencogo.point.PointMap;import com.scottbyrns.opencogo.polygon.Polygon;
+
+import java.io.File;
 
 /**
  * Created by IntelliJ IDEA.
@@ -34,7 +36,10 @@ public class App {
             myPointMap.getPoint("P" + i);
         }
 
-        PointFile file = new PointFile("/Users/scott/Workspace/OpenCOGO/testData.json");
+        PointFile file = new PointFile(new File("/Users/scott/Workspace/OpenCOGO/testData.json"));
+
+        
+
         file.savePointFile("/tmp/test.json");
 
     }
