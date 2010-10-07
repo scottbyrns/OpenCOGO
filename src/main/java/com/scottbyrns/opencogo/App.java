@@ -1,6 +1,7 @@
 package com.scottbyrns.opencogo;
 
 import com.scottbyrns.opencogo.point.Point;
+import com.scottbyrns.opencogo.point.PointFile;
 import com.scottbyrns.opencogo.point.PointMap;
 
 /**
@@ -32,6 +33,9 @@ public class App {
         for (int i = 0; i < 100000; i += 1) {
             myPointMap.getPoint("P" + i);
         }
+
+        PointFile file = new PointFile("/Users/scott/Workspace/OpenCOGO/testData.json");
+        file.savePointFile("/tmp/test.json");
 
     }
 
