@@ -1,5 +1,6 @@
 package com.scottbyrns.opencogo.point;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,8 +15,21 @@ import java.util.Date;
  */
 public class PointFile {
 
+    public static final String CREATED = "c";
+    public static final String MODIFIED = "m";
+    public static final String AUTHOR = "a";
+
+    public static final String POINTS = "p";
+    public static final String NAME = "n";
+    public static final String DESCRIPTION = "d";
+    public static final String NOTES = "nt";
+
+    public static final String X = "x";
+    public static final String Y = "y";
+    public static final String Z = "z";
+
     File file = null;
-    PointMap pointMap = null;
+    public PointMap pointMap = null;
 
     JSONObject pointFileJSON = null;
 
@@ -24,9 +38,44 @@ public class PointFile {
      * @param file
      */
     public PointFile (File file) {
+        this.pointMap = new PointMap();
         this.file = file;
         openPointFile(this.file);
+        inflatePointFile();
     }
+
+    /**
+     * Inflate the PointMap with data from our source file.
+     */
+    public void inflatePointFile () {
+        JSONArray points = null;
+        
+        try {
+            points = this.pointFileJSON.getJSONArray(PointFile.POINTS);
+        }
+        catch (JSONException e) {
+            System.out.println("Error reading points object from file.");
+        }
+
+        JSONObject point;
+
+        for (int i = 0; i < points.length(); i += 1) {
+            try {
+                point = points.getJSONObject(i);
+                float x, y, z;
+                x = (float)point.getDouble(PointFile.X);
+                y = (float)point.getDouble(PointFile.Y);
+                z = (float)point.getDouble(PointFile.Z);
+                pointMap.addPoint(point.getString(PointFile.NAME), new Point(x, y, z));
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+                System.out.println("Point corupt?");
+            }
+        }
+    }
+
+
     /**
      * Open the point file as JSON from the specified file path.
      * @param file Path to the file to be opened.
@@ -75,7 +124,7 @@ public class PointFile {
      */
     public void setModifyDate () {
         try {
-            this.pointFileJSON.put("modified", new Date().getTime());
+            this.pointFileJSON.put(PointFile.MODIFIED, new Date().getTime());
         }
         catch (JSONException e) {
             System.out.println("Trouble updating the modified date before a save.");

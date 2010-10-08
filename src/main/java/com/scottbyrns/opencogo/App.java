@@ -2,7 +2,8 @@ package com.scottbyrns.opencogo;
 
 import com.scottbyrns.opencogo.point.Point;
 import com.scottbyrns.opencogo.point.PointFile;
-import com.scottbyrns.opencogo.point.PointMap;import com.scottbyrns.opencogo.polygon.Polygon;
+import com.scottbyrns.opencogo.point.PointMap;
+import com.scottbyrns.opencogo.Polygon;
 
 import java.io.File;
 
@@ -38,7 +39,7 @@ public class App {
 
         PointFile file = new PointFile(new File("/Users/scott/Workspace/OpenCOGO/testData.json"));
 
-        
+        System.out.println(file.pointMap.pointMap.toString());
 
         file.savePointFile("/tmp/test.json");
 
